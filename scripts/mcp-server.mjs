@@ -150,7 +150,7 @@ export const TOOL_DEFINITIONS = [
         budget: {
           type: "string",
           enum: ["low", "mid", "high"],
-          description: "Reflection budget (default: mid).",
+          description: "Reflection budget (default: low for fast self-hosted synthesis; use mid or high for multi-hop reasoning).",
         },
         max_tokens: {
           type: "integer",
@@ -356,7 +356,7 @@ export async function dispatchToolCall(name, args = {}, { env = process.env, fet
       const resp = await client.reflect({
         query: args.query,
         context: args.context,
-        budget: args.budget || "mid",
+        budget: args.budget || "low",
         maxTokens: args.max_tokens || 4096,
         tags: args.tags,
         tagsMatch: args.tags_match,

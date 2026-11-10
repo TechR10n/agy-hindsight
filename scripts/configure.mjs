@@ -21,7 +21,9 @@ function printHelp() {
       "Options:",
       "  --status                Print safe, secret-free resolved configuration summary",
       "  --api-url <url>         Set Hindsight base URL (e.g. http://localhost:8888)",
+      "  --clear-api-url         Clear configure.mjs URL override (defer to /plugin variables)",
       "  --bank-id <id>          Set Hindsight memory bank ID",
+      "  --clear-bank-id         Clear configure.mjs bank override (defer to /plugin variables)",
       "  --host-tag <name>       Set host tag name (stored as host:<name> and metadata.host)",
       "  --clear-host-tag        Reset host tag to default from local hostname",
       "  --api-token-stdin       Read optional bearer token from stdin (avoids shell history)",
@@ -55,10 +57,16 @@ function main() {
       if (!val) throw new Error("--api-url requires a value.");
       updates.apiUrl = val.trim();
       mutated = true;
+    } else if (arg === "--clear-api-url") {
+      updates.apiUrl = undefined;
+      mutated = true;
     } else if (arg === "--bank-id") {
       const val = args[++i];
       if (!val) throw new Error("--bank-id requires a value.");
       updates.bankId = val.trim();
+      mutated = true;
+    } else if (arg === "--clear-bank-id") {
+      updates.bankId = undefined;
       mutated = true;
     } else if (arg === "--host-tag") {
       const val = args[++i];

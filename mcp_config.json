@@ -13,12 +13,14 @@
         {
           "name": "HINDSIGHT_API_URL",
           "title": "Hindsight Base URL",
-          "description": "Base URL of your self-hosted Hindsight API server (for example, http://localhost:8888). Required; no default."
+          "description": "Base URL of your self-hosted Hindsight API server (for example, http://localhost:8888). Required; no default.",
+          "link": "https://github.com/TechR10n/agy-hindsight#configuration"
         },
         {
           "name": "HINDSIGHT_BANK_ID",
           "title": "Hindsight Bank ID",
-          "description": "Target Hindsight memory bank ID for recall and retain operations (for example, my-memory-bank). Required; no default."
+          "description": "Target Hindsight memory bank ID for recall and retain operations (for example, my-memory-bank). Required; no default.",
+          "link": "https://github.com/TechR10n/agy-hindsight#configuration"
         }
       ]
     }

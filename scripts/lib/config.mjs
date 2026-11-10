@@ -245,10 +245,15 @@ export function resolveConfig({
     };
   }
 
+  const envApiUrl = cleanScalar(env.HINDSIGHT_API_URL);
+  const agyApiUrl = cleanScalar(agyVars.HINDSIGHT_API_URL);
+  const fileApiUrl = cleanScalar(fileCfg.apiUrl);
+  // If env matches agyVars, env came from mcp_config.json `${HINDSIGHT_API_URL}` expansion;
+  // allow an explicit configure.mjs override (`fileApiUrl`) to keep hooks and MCP in sync.
   const rawApiUrl =
-    cleanScalar(env.HINDSIGHT_API_URL) ??
-    cleanScalar(fileCfg.apiUrl) ??
-    cleanScalar(agyVars.HINDSIGHT_API_URL);
+    envApiUrl && envApiUrl !== agyApiUrl
+      ? envApiUrl
+      : fileApiUrl ?? envApiUrl ?? agyApiUrl;
 
   const apiUrl = normalizeBaseUrl(rawApiUrl);
 
@@ -257,10 +262,13 @@ export function resolveConfig({
     false
   );
 
+  const envBankId = cleanScalar(env.HINDSIGHT_BANK_ID);
+  const agyBankId = cleanScalar(agyVars.HINDSIGHT_BANK_ID);
+  const fileBankId = cleanScalar(fileCfg.bankId);
   let rawBankId =
-    cleanScalar(env.HINDSIGHT_BANK_ID) ??
-    cleanScalar(fileCfg.bankId) ??
-    cleanScalar(agyVars.HINDSIGHT_BANK_ID);
+    envBankId && envBankId !== agyBankId
+      ? envBankId
+      : fileBankId ?? envBankId ?? agyBankId;
 
   if (!rawBankId && dynamicBankId) {
     const projectBase = path.basename(path.resolve(cwd)) || "workspace";

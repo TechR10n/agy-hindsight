@@ -3,22 +3,32 @@
   "name": "agy-hindsight",
   "displayName": "Hindsight",
   "version": "0.1.0",
-  "description": "Self-hosted Hindsight long-term memory for coding sessions with automatic recall, turn retention, and MCP memory tools.",
+  "description": "Self-hosted or cloud Hindsight persistent long-term memory for coding sessions with automatic cross-session recall, turn retention, and MCP tools.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
     "Recall relevant Hindsight memories for the current task",
     "Retain our key architectural decisions and findings into Hindsight",
     "Check Hindsight connection health and active memory bank status"
   ],
-  "author": "agy-hindsight contributors",
-  "homepage": "https://github.com/vectorize-io/hindsight",
+  "author": {
+    "name": "TechR10n",
+    "url": "https://github.com/TechR10n"
+  },
+  "homepage": "https://github.com/TechR10n/agy-hindsight",
+  "repository": "https://github.com/TechR10n/agy-hindsight",
   "license": "MIT",
   "keywords": [
     "hindsight",
+    "vectorize",
     "memory",
+    "long-term-memory",
+    "persistent-memory",
+    "cross-session",
+    "knowledge-graph",
     "recall",
     "retain",
     "reflect",
+    "self-hosted",
     "mcp"
   ]
 }

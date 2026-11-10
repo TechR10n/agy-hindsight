@@ -170,12 +170,12 @@ export class HindsightClient {
     bankId = this.bankId,
     query,
     context,
-    budget = "mid",
+    budget = "low",
     maxTokens = 4096,
     tags,
     tagsMatch,
     includeBasedOn = true,
-    timeoutMs = 60000,
+    timeoutMs = 150000,
   }) {
     if (typeof query !== "string" || !query.trim()) {
       throw new Error("reflect() requires a non-empty query string.");

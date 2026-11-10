@@ -20,14 +20,27 @@ Self-hosted [Hindsight](https://github.com/vectorize-io/hindsight) long-term mem
 
 - **Node.js** 20+ (`node` on `PATH`)
 - **Antigravity** CLI (`agy` 1.5+) and/or Antigravity IDE
-- A reachable self-hosted **Hindsight** server (for example, `http://localhost:8888`) and an existing memory bank ID
+- A reachable **Hindsight** API endpoint — either self-hosted (`http://localhost:8888` or your LAN URL) or [Hindsight Cloud](https://hindsight.vectorize.io) (`https://api.hindsight.vectorize.io`) — and an existing memory bank ID
+
+### New to Hindsight? Set Up a Backend First
+
+`agy-hindsight` connects to a Hindsight memory server. If you do not have one yet, pick either option before enabling the plugin:
+
+1. **Self-hosted (Docker / local, no account required):** Follow the [Hindsight Quickstart](https://github.com/vectorize-io/hindsight) to start a local Hindsight API + Control Plane (`http://localhost:8888`) and create a memory bank in the web UI.
+2. **Managed Hindsight Cloud:** Sign up at [ui.hindsight.vectorize.io](https://ui.hindsight.vectorize.io), create a memory bank and API key, use `https://api.hindsight.vectorize.io` as `HINDSIGHT_API_URL`, and pipe your API key via `--api-token-stdin` (see [Optional Settings](#optional-settings)).
 
 ## Installation
 
-Install directly from a local checkout:
+Install from GitHub or directly from a local checkout:
 
 ```bash
+# Install from GitHub
+agy plugin install https://github.com/TechR10n/agy-hindsight
+
+# Or install from a local directory
 agy plugin install /path/to/agy-hindsight
+
+# Verify installation
 agy plugin list
 ```
 
@@ -62,8 +75,9 @@ node ~/.gemini/config/plugins/agy-hindsight/scripts/configure.mjs --status
 # Override the host tag (stored as host:workstation and metadata.host="workstation")
 node ~/.gemini/config/plugins/agy-hindsight/scripts/configure.mjs --host-tag workstation
 
-# Store an optional API token from stdin (never pass tokens as CLI flags)
-printf '%s' "$MY_HINDSIGHT_TOKEN" | node ~/.gemini/config/plugins/agy-hindsight/scripts/configure.mjs --api-token-stdin
+# Store an optional API token from stdin (for example, via Infisical or 1Password CLI)
+infisical secrets get HINDSIGHT_CP_ACCESS_KEY --env prod --plain \
+  | node ~/.gemini/config/plugins/agy-hindsight/scripts/configure.mjs --api-token-stdin
 
 # Clear a stored API token for unauthenticated servers
 node ~/.gemini/config/plugins/agy-hindsight/scripts/configure.mjs --clear-token
@@ -87,7 +101,12 @@ agy plugin validate --strict .
 node ./scripts/self-test.mjs
 ```
 
-See [docs/verification-proof.md](docs/verification-proof.md) for end-to-end validation output across `agy plugin validate --strict`, `agy plugin install`, Antigravity IDE retention, Antigravity CLI retention, and live memory recall.
+See [docs/verification-proof.md](docs/verification-proof.md) for end-to-end validation output across `agy plugin validate --strict`, `agy plugin install`, Antigravity IDE retention, Antigravity CLI retention, and live memory recall, and [docs/marketplace-readiness.md](docs/marketplace-readiness.md) for public GitHub mirror and Antigravity Marketplace publishing steps.
+
+## Security & Changelog
+
+- Security & secret handling policy: [SECURITY.md](SECURITY.md)
+- Release history: [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 

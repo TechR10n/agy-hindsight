@@ -181,6 +181,32 @@ async function main() {
     assert.equal(ideResolved.hostTag, "host:shared-workstation");
     assert.equal(cliResolved.hostTag, "host:shared-workstation");
 
+    // 5c. Precedence: configure.mjs bankId overrides mcp_config.json ${HINDSIGHT_BANK_ID} expansion,
+    // while an explicit shell env override still wins.
+    writePluginDataConfig({ bankId: "override-from-configure" }, {}, fakeHome);
+    const mcpAutoEnvResolved = resolveConfig({
+      env: {
+        PLUGIN_DATA: ideSurfaceData,
+        HINDSIGHT_API_URL: "http://127.0.0.1:8888",
+        HINDSIGHT_BANK_ID: "from-agy-ui",
+      },
+      homeDir: fakeHome,
+      pluginRoot: "/opt/plugins/agy-hindsight",
+    });
+    assert.equal(mcpAutoEnvResolved.bankId, "override-from-configure");
+
+    const explicitShellEnvResolved = resolveConfig({
+      env: {
+        PLUGIN_DATA: ideSurfaceData,
+        HINDSIGHT_API_URL: "http://127.0.0.1:8888",
+        HINDSIGHT_BANK_ID: "explicit-shell-bank",
+      },
+      homeDir: fakeHome,
+      pluginRoot: "/opt/plugins/agy-hindsight",
+    });
+    assert.equal(explicitShellEnvResolved.bankId, "explicit-shell-bank");
+    writePluginDataConfig({ bankId: undefined }, {}, fakeHome);
+
     // 6. Surface detection distinguishes IDE vs CLI
     assert.equal(
       detectSurface(

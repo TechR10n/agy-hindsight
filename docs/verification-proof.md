@@ -230,3 +230,24 @@ Called `agy-hindsight_hindsight` -> `hindsight_recall` (`tags: ["host:dev-workst
   ]
 }
 ```
+
+---
+
+## 6. Authenticated User Acceptance Testing (`UAT-01` – `UAT-12`)
+
+Executed a 12-case end-to-end User Acceptance Test suite against Hindsight `0.10.1` on a fresh disposable bank (`agy-hindsight-uat-20261110`) with Bearer authentication injected via `infisical secrets get ... --env prod --plain | node scripts/configure.mjs --api-token-stdin`:
+
+| ID | Test Case | Result | Verified Outcome |
+| :--- | :--- | :--- | :--- |
+| `UAT-01` | Strict manifest & component validation | PASS | `agy plugin validate --strict .` exited `0` (`0` errors, `0` warnings). |
+| `UAT-02` | Local install & `/plugin` configuration | PASS | Installed cleanly to `<home>/.gemini/config/plugins/agy-hindsight`; enabled via `/plugin`. |
+| `UAT-03` | Infisical `prod` secret injection (`--api-token-stdin`) | PASS | Stored token at `0600` in `${PLUGIN_DATA}/config.json` across IDE & CLI surfaces; `apiTokenConfigured: true` with zero secret output. |
+| `UAT-04` | Bank mutation safety (`createBank` / `manageBankConfig`) | PASS | Verified zero `PUT`/`PATCH` calls when `createBank: false` (default); opt-in `createBank: true` issued `PUT {}` without modifying bank mission/settings. |
+| `UAT-05` | Default local hostname provenance (`--clear-host-tag`) | PASS | Derived `host:<short-hostname>` and `metadata.host = "<short-hostname>"` automatically from `os.hostname()`. |
+| `UAT-06` | Authenticated Antigravity IDE `Stop` retain | PASS | Retained `antigravity:antigravity-ide:50bfb9ba-a59a-4665-84a3-2a81b3c8bba8` (`UAT-IDE-901`) with Bearer auth. |
+| `UAT-07` | Authenticated Antigravity CLI `Stop` retain | PASS | Retained `antigravity:antigravity-cli:c022df72-d377-4ec4-9545-dfb9b4f97eb6` (`UAT-CLI-902`) with matching `host:` tag. |
+| `UAT-08` | Automatic `PreInvocation` `injectSteps` recall | PASS | Fresh `agy --print` recalled `UAT-IDE-901`, `UAT-CLI-902`, and `UAT-MCP-903` strictly from `<hindsight_memory>`. |
+| `UAT-09` | MCP tools (`status`, `retain`, `recall`, `reflect`) | PASS | Verified all 4 tools under `agy-hindsight_hindsight`; `hindsight_retain` stripped `harness:`/`source:` prefixes; `hindsight_reflect` synthesized all 3 UAT milestones. |
+| `UAT-10` | Pause/resume & unreachable-server fail-open | PASS | `AGY_HINDSIGHT_DISABLED=1` and unreachable `HINDSIGHT_API_URL` returned `{}` cleanly without blocking user turns. |
+| `UAT-11` | Hindsight Control Plane browser verification | PASS | Verified constellation graph, `Documents` metadata/tags table, and interactive `Recall Analyzer` (`0.18s`, 5 results) in the web UI. |
+| `UAT-12` | Secret, hostname & file-permission audit | PASS | `0600` config permissions verified; zero secrets, private hostnames, local user paths, or shared-bank defaults in repository tree. |

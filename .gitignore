@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+*.log
+.env
+.env.*
+.infisical.json
+.infisical.yaml
+.tmp*
