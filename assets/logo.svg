@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Hindsight">
+  <defs>
+    <linearGradient id="hs-bg" x1="16" y1="16" x2="112" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0074D9" />
+      <stop offset="100%" stop-color="#009296" />
+    </linearGradient>
+  </defs>
+  <rect x="14" y="14" width="100" height="100" rx="22" fill="url(#hs-bg)" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="2" />
+  <path d="M42 40v48M86 40v48M42 64h44" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <circle cx="42" cy="40" r="6" fill="#E6FFFA" />
+  <circle cx="86" cy="40" r="6" fill="#E6FFFA" />
+  <circle cx="64" cy="64" r="7" fill="#FFFFFF" />
+  <circle cx="42" cy="88" r="6" fill="#E6FFFA" />
+  <circle cx="86" cy="88" r="6" fill="#E6FFFA" />
+</svg>
+

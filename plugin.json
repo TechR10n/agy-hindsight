@@ -1,0 +1,25 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "agy-hindsight",
+  "displayName": "Hindsight",
+  "version": "0.1.0",
+  "description": "Self-hosted Hindsight long-term memory for coding sessions with automatic recall, turn retention, and MCP memory tools.",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Recall relevant Hindsight memories for the current task",
+    "Retain our key architectural decisions and findings into Hindsight",
+    "Check Hindsight connection health and active memory bank status"
+  ],
+  "author": "agy-hindsight contributors",
+  "homepage": "https://github.com/vectorize-io/hindsight",
+  "license": "MIT",
+  "keywords": [
+    "hindsight",
+    "memory",
+    "recall",
+    "retain",
+    "reflect",
+    "mcp"
+  ]
+}
+

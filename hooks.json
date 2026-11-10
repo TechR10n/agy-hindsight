@@ -1,0 +1,20 @@
+{
+  "hindsight-memory": {
+    "enabled": true,
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "node ./scripts/pre-invocation.mjs",
+        "timeout": 25
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "node ./scripts/stop.mjs",
+        "timeout": 90
+      }
+    ]
+  }
+}
+
