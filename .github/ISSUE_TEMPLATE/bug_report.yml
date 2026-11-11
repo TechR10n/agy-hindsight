@@ -1,0 +1,50 @@
+name: Bug Report
+description: Report a reproducible issue in Antigravity IDE, Antigravity CLI, or MCP tools
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting an issue! **Never include API tokens, passwords, private internal URLs, or sensitive memory contents** in your report.
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Antigravity Surface
+      options:
+        - Antigravity IDE
+        - Antigravity CLI (agy)
+        - Antigravity App
+        - Both IDE and CLI
+    validations:
+      required: true
+  - type: dropdown
+    id: backend
+    attributes:
+      label: Hindsight Backend
+      options:
+        - Self-hosted Hindsight (Docker / Kubernetes / local)
+        - Hindsight Cloud (api.hindsight.vectorize.io)
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Environment Versions
+      description: Output of `node -v`, `agy --version`, and your Hindsight server version
+      placeholder: "Node v22.x, agy 1.5.x, Hindsight v0.x"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal steps to reproduce the behavior
+    validations:
+      required: true
+  - type: textarea
+    id: status
+    attributes:
+      label: Redacted Status Output
+      description: Optional output of `node ~/.gemini/config/plugins/agy-hindsight/scripts/configure.mjs --status` (scrub any private hostnames first)
+      render: json

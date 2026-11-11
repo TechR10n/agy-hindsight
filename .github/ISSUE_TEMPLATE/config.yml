@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Community Q&A and Memory Workflows (GitHub Discussions)
+    url: https://github.com/TechR10n/agy-hindsight/discussions
+    about: Ask setup questions, share bank/skill workflows, and discuss multi-agent memory patterns.
+  - name: Security Policy
+    url: https://github.com/TechR10n/agy-hindsight/blob/main/SECURITY.md
+    about: Please do not file public issues for credential exposure or security vulnerabilities.

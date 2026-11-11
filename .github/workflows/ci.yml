@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Self-Test & Manifest Checks (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Verify zero package.json runtime dependencies
+        run: |
+          if [ -f package-lock.json ] || [ -d node_modules ]; then
+            echo "Unexpected npm lockfile or node_modules directory"
+            exit 1
+          fi
+
+      - name: Validate plugin JSON manifests and contract invariants
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const plugin = JSON.parse(fs.readFileSync("plugin.json", "utf8"));
+            const hooks = JSON.parse(fs.readFileSync("hooks.json", "utf8"));
+            const mcp = JSON.parse(fs.readFileSync("mcp_config.json", "utf8"));
+            if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(plugin.name)) throw new Error("Invalid plugin.name");
+            if (/^(Antigravity|Gemini|Claude|Cursor)\b/i.test(plugin.displayName)) throw new Error("Invalid displayName prefix");
+            if ((plugin.suggestedPrompts || []).length > 3) throw new Error("Keep suggestedPrompts <= 3 for --strict");
+            const hooksRaw = fs.readFileSync("hooks.json", "utf8");
+            if (hooksRaw.includes("${PLUGIN_ROOT}")) throw new Error("hooks.json must not use ${PLUGIN_ROOT}");
+            if ("variables" in mcp) throw new Error("variables must be nested inside mcpServers.<server>.variables");
+            const env = mcp.mcpServers?.hindsight?.env || {};
+            if ("PLUGIN_ROOT" in env || "PLUGIN_DATA" in env) throw new Error("Do not redeclare PLUGIN_ROOT or PLUGIN_DATA in env");
+            const vars = mcp.mcpServers?.hindsight?.variables || {};
+            if ("default" in (vars.HINDSIGHT_API_URL || {}) || "default" in (vars.HINDSIGHT_BANK_ID || {})) {
+              throw new Error("Required connection variables must not hard-code defaults");
+            }
+            console.log("Manifest contract invariants verified.");
+          '
+
+      - name: Check for accidental user home paths or token literals
+        run: |
+          if grep -rnIE '(ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16})' --exclude-dir=.git --exclude=ci.yml . ; then
+            echo "Found token literal in repository files."
+            exit 1
+          fi
+          if grep -rnIE '(/Users/[A-Za-z0-9._-]+/|/home/[A-Za-z0-9._-]+/)' --exclude-dir=.git --exclude=ci.yml --exclude=self-test.mjs . ; then
+            echo "Found machine-specific home directory path in repository files."
+            exit 1
+          fi
+
+      - name: Run offline self-test suite
+        run: node ./scripts/self-test.mjs

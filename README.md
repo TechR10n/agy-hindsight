@@ -103,8 +103,9 @@ node ./scripts/self-test.mjs
 
 See [docs/verification-proof.md](docs/verification-proof.md) for end-to-end validation output across `agy plugin validate --strict`, `agy plugin install`, Antigravity IDE retention, Antigravity CLI retention, and live memory recall, and [docs/marketplace-readiness.md](docs/marketplace-readiness.md) for public GitHub mirror and Antigravity Marketplace publishing steps.
 
-## Security & Changelog
+## Contributing & Security
 
+- Contributor guide & PR checklist: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Security & secret handling policy: [SECURITY.md](SECURITY.md)
 - Release history: [CHANGELOG.md](CHANGELOG.md)
 

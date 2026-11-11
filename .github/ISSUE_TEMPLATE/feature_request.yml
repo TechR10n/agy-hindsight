@@ -1,0 +1,23 @@
+name: Feature or Skill Enhancement
+description: Propose an improvement to hooks, MCP tools, rules, or documentation
+title: "[Enhancement]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Note: `agy-hindsight` focuses strictly on Hindsight long-term memory (`PreInvocation` recall, `Stop` retention, and `agy-hindsight_hindsight` MCP tools) with zero external npm dependencies.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Workflow Need
+      description: What coding-agent memory workflow is currently difficult or missing?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: How should this work across Antigravity IDE and Antigravity CLI?
+    validations:
+      required: true
